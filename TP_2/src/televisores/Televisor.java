@@ -1,23 +1,25 @@
-package televisor;
+package televisores;
+
+import pantalla.Pantalla;
 
 public class Televisor {
     private String marca;
     private String modelo;
     private int anioFabricacion;
-    private char tipo; //P = plasma, L = LCD, O = Oled
-    private int tamanioPantalla; //Expresado en pulgadas
+    private Pantalla pantalla;
     private String resolucion;
     private boolean smart;
+    private boolean encendido;
 
-    public Televisor(String marca, String modelo, int anioFabricacion, char tipo, int tamanioPantalla,
+    public Televisor(String marca, String modelo, int anioFabricacion, Pantalla pantalla,
             String resolucion, boolean smart) {
         this.marca = marca;
         this.modelo = modelo;
         this.anioFabricacion = anioFabricacion;
-        this.tipo = tipo;
-        this.tamanioPantalla = tamanioPantalla;
+        this.pantalla = pantalla;
         this.resolucion = resolucion;
         this.smart = smart;
+        this.encendido = false;
     }
 
     public String getMarca() {
@@ -32,24 +34,24 @@ public class Televisor {
         return anioFabricacion;
     }
 
-    public char getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(char tipo) {
-        this.tipo = tipo;
-    }
-
-    public int getTamanioPantalla() {
-        return tamanioPantalla;
-    }
-
     public String getResolucion() {
         return resolucion;
     }
 
     public void setResolucion(String resolucion) {
         this.resolucion = resolucion;
+    }
+
+    public boolean isEncendido() {
+        return encendido;
+    }
+
+    public void encender() {
+        this.encendido = true;
+    }
+
+    public void apagar() {
+        this.encendido = false;
     }
 
     public boolean isSmart() {
@@ -60,5 +62,8 @@ public class Televisor {
         this.smart = smart;
     }
     
+    public Pantalla getPantalla() {
+        return pantalla;
+    }
     
 }
