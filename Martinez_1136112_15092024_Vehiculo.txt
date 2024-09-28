@@ -1,0 +1,42 @@
+public class Vehiculo {
+    public String desplazar(){
+        return "Vehiculo desplazandose";
+    }
+}
+
+public class Coche extends Vehiculo{
+
+    public String desplazar(String modo) {
+        if ("automático".equals(modo)) {
+            return "Coche desplazándose en modo automático";
+        } else {
+            return "Coche desplazándose en modo normal";
+        }
+    }
+}
+
+public class Bicicleta extends Vehiculo{
+    @Override
+    public String desplazar() {
+        return "Bicicleta desplazándose con pedales";
+    }
+}
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        Vehiculo v0 = new Vehiculo();
+        Vehiculo v1 = new Coche();
+        Vehiculo v2 = new Bicicleta();
+
+        System.out.println(v0.desplazar());
+        System.out.println(v1.desplazar());
+        //Desplazar() sobreescrito para Bicicleta
+        System.out.println(v2.desplazar());
+
+
+        Coche c0 = new Coche();
+        //Desplazar(modo) sobrecargado para Coche
+        System.out.println(c0.desplazar("automático"));
+        System.out.println(c0.desplazar("normal"));
+    }
+}
