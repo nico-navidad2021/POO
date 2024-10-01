@@ -25,9 +25,9 @@ public class Biblioteca {
         librosAlmacenados.remove(libro);
     }
 
-    public Libro buscarLibro(Libro libroABuscar) {
+    public Libro buscarLibro(String isbn) {
         for (Libro libro : librosAlmacenados) {
-            if (libro.getIsbn().equalsIgnoreCase(libroABuscar.getIsbn())) {
+            if (libro.getIsbn().equalsIgnoreCase(isbn)) {
                 return libro;
             }
         }
