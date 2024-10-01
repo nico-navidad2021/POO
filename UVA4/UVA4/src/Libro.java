@@ -29,12 +29,11 @@ public class Libro implements Comparable<Libro>{
 
     @Override
     public String toString(){
-        return "Libro: [Titulo= "+titulo+" Autor= "+autor+" Fecha publicacion= "+publicacion+" ISBN= "+isbn+"]";
+        return "Libro: [Titulo= "+titulo+" | Autor= "+autor+" | Fecha publicacion= "+publicacion+" | ISBN= "+isbn+"]";
     } 
 
     @Override
     public int compareTo(Libro o) {
         return this.titulo.compareTo(o.getTitulo());
     }
-
 }
