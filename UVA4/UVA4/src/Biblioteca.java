@@ -1,8 +1,7 @@
 import java.util.ArrayList;
-import java.util.List;
 
 public class Biblioteca {
-    private List<Libro> librosAlmacenados;
+    private ArrayList<Libro> librosAlmacenados;
     private String nombre;
 
     public Biblioteca(String nombre) {
@@ -10,7 +9,7 @@ public class Biblioteca {
         this.librosAlmacenados = new ArrayList<>();
     }
 
-    public List<Libro> getLibrosAlmacenados() {
+    public ArrayList<Libro> getLibrosAlmacenados() {
         return librosAlmacenados;
     }
 
@@ -26,13 +25,12 @@ public class Biblioteca {
         librosAlmacenados.remove(libro);
     }
 
-    public Libro buscarLibro(){
-        //TODO
-        Libro a = new Libro(nombre, nombre, 1232, nombre);
-        return a;
+    public Libro buscarLibro(String isbn) {
+        for (Libro libro : librosAlmacenados) {
+            if (libro.getIsbn().equalsIgnoreCase(isbn)) {
+                return libro;
+            }
+        }
+        return null;
     }
-    
-
-    
-
 }
