@@ -1,42 +1,97 @@
 package GUI;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+import modelo.Libro;
+import modelo.Biblioteca;
 
 public class BuscarGUI extends JFrame {
-    public BuscarGUI() {
+    private Biblioteca biblioteca;
+    private JTextField inputTitulo;
+    private JComboBox<String> criterioBusqueda;
+    private JTable tablaResultados;
+    private DefaultTableModel modeloTabla;
 
+    public BuscarGUI() {
+        this.biblioteca = new Biblioteca();
         setTitle("Busqueda libros");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(500, 500);
 
 
-
+        //Parte de los inputs
         JPanel panelInput = new JPanel(new FlowLayout());
 
-        JLabel inputText = new JLabel("Nombre: ");
-
-        JTextArea inputTitulo = new JTextArea();
-        inputTitulo.setSize(150,50);
-        inputTitulo.setMinimumSize(new Dimension(150,50));
+        criterioBusqueda = new JComboBox<>(new String[]{"Título", "Autor", "Categoría"});
 
         JButton buscarButton = new JButton();
         buscarButton.setText("Buscar");
 
-        panelInput.add(inputText);
+        inputTitulo = new JTextField("",20);
+        inputTitulo.setMinimumSize(new Dimension(150, 30));
+        inputTitulo.setSize(new Dimension(150, 30));
+
+        panelInput.add(criterioBusqueda);
         panelInput.add(inputTitulo);
         panelInput.add(buscarButton);
 
+        // Panel de resultados
+        JPanel panelResultado = new JPanel(new BorderLayout());
+        modeloTabla = new DefaultTableModel(new String[]{"Título", "Autor", "ISBN", "Año"}, 0);
+        tablaResultados = new JTable(modeloTabla);
+        JScrollPane scrollPane = new JScrollPane(tablaResultados);
+        panelResultado.add(scrollPane, BorderLayout.CENTER);
 
-        JPanel panelResultado = new JPanel(new FlowLayout());
 
-        JPanel panelPrincipal = new JPanel(new GridLayout(2, 1));
-        panelPrincipal.add(panelInput);
-        panelPrincipal.add(panelResultado);
+        //La pantalla general como un todo
+        JPanel panelPrincipal = new JPanel(new BorderLayout());
+        panelPrincipal.add(panelInput, BorderLayout.NORTH);
+        panelPrincipal.add(panelResultado, BorderLayout.CENTER);
 
         add(panelPrincipal);
 
+        buscarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                buscarLibro();
+            }
+        });
 
+    }
+
+    private void buscarLibro() {
+
+        System.out.println("Buscando libros...");
+
+        String inputBusqueda = inputTitulo.getText();
+        String criterioBus = criterioBusqueda.getSelectedItem().toString();
+
+        System.out.println("inputBusqueda: "+inputBusqueda);
+        System.out.println("criterioBus: "+criterioBus);
+
+        List<Libro> resultados = biblioteca.buscarLibro(criterioBus,inputBusqueda);
+
+        for (Libro libro : resultados) {
+            System.out.println("resultados: "+libro.getAutor());
+            System.out.println("resultados: "+libro.getTitulo());
+        }
+
+
+        // Limpiar la tabla
+        this.modeloTabla.setRowCount(0);
+        System.out.println("Limpie la tabla...");
+
+
+        // Añadir resultados a la tabla
+        if (resultados != null) {
+            for (Libro libro : resultados) {
+                this.modeloTabla.addRow(new Object[]{libro.getTitulo(), libro.getAutor(), libro.getIsbn(), 2002});
+            }
+        }
     }
 }
