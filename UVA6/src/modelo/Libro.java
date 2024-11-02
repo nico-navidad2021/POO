@@ -1,10 +1,12 @@
+package modelo;
+
 public class Libro {
     private String titulo;
     private String autor;
     private String isbn;
     private boolean prestado;
 
-    public Libro(String titulo, String autor, String isbn) {
+    public Libro(String titulo, String autor, String isbn, boolean prestado) {
         this.titulo = titulo;
         this.autor = autor;
         this.isbn = isbn;
