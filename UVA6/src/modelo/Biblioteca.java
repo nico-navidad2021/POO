@@ -5,11 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Biblioteca {
-    ArrayList<Libro> libros;
+    private ArrayList<Libro> libros;
 
     public Biblioteca() {
         this.libros = new ArrayList<>();
         cargarDatos();
+    }
+
+    public List<Libro> getLibrosAlmacenados() {
+        return libros;
     }
 
     public Libro buscarLibro(String titulo) {
@@ -23,7 +27,6 @@ public class Biblioteca {
 
     public List<Libro> buscarLibro(String criterio, String valor) {
         ArrayList<Libro> resultados = new ArrayList<>();
-
 
         switch (criterio.toLowerCase()) {
             case "título":
@@ -51,6 +54,27 @@ public class Biblioteca {
         return resultados;
     }
 
+    public void agregarLibro(Libro libro) {
+        libros.add(libro);
+        guardarDatos();
+    }
+
+    public void eliminarLibro(Libro libro) {
+        libros.remove(libro);
+        guardarDatos();
+    }
+
+    public void modificarLibro(String tituloOriginal, String nuevoTitulo, String nuevoAutor, String nuevoIsbn, boolean prestado) {
+        Libro libro = buscarLibro(tituloOriginal);
+        if (libro != null) {
+            libro.setTitulo(nuevoTitulo);
+            libro.setAutor(nuevoAutor);
+            libro.setIsbn(nuevoIsbn);
+            libro.setPrestado(prestado);
+            guardarDatos();
+        }
+    }
+
     public void prestarLibro(String titulo) {
         Libro libro = buscarLibro(titulo);
         if (libro != null && !libro.isPrestado()) {
@@ -65,10 +89,6 @@ public class Biblioteca {
             libro.setPrestado(false);
             guardarDatos();
         }
-    }
-
-    public void admintracionLibros() {
-        //TODO
     }
 
     private void cargarDatos() {
