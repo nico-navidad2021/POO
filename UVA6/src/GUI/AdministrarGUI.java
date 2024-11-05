@@ -22,7 +22,7 @@ public class AdministrarGUI extends JFrame {
         this.biblioteca = new Biblioteca();
         setTitle("Administración de libros");
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(600, 500);
 
         JPanel panelInput = new JPanel(new GridLayout(6, 2, 5, 5));

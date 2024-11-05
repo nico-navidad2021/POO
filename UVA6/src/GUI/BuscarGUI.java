@@ -20,7 +20,7 @@ public class BuscarGUI extends JFrame {
         this.biblioteca = new Biblioteca();
         setTitle("Busqueda libros");
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(500, 500);
 
 

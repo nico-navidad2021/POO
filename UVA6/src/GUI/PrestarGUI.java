@@ -13,7 +13,7 @@ public class PrestarGUI extends JFrame {
         this.biblioteca = new Biblioteca();
         setTitle("Prestar libros");
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(500, 500);
 
         JPanel panelInput = new JPanel(new FlowLayout());
