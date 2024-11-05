@@ -22,7 +22,7 @@ public class PantallaPrincipal extends JFrame {
 
         JButton devolverButton = new JButton();
         devolverButton.setText("Devolver");
-        devolverButton.addActionListener(e -> new PrestarGUI().setVisible(true));
+        devolverButton.addActionListener(e -> new DevolverGUI().setVisible(true));
 
         JButton adminButton = new JButton();
         adminButton.setText("Administrar");

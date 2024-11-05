@@ -1,42 +1,49 @@
 package GUI;
 
+import modelo.Biblioteca;
+import modelo.Libro;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class DevolverGUI extends JFrame {
-    public DevolverGUI() {
+    private Biblioteca biblioteca;
 
-        setTitle("Devolucion libros");
+    public DevolverGUI() {
+        this.biblioteca = new Biblioteca();
+        setTitle("Devolución de libros");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(500, 500);
 
-
-
         JPanel panelInput = new JPanel(new FlowLayout());
 
         JLabel inputText = new JLabel("Nombre: ");
+        JTextField inputTitulo = new JTextField(20);
 
-        JTextArea inputTitulo = new JTextArea();
-        inputTitulo.setSize(150,50);
-        inputTitulo.setMinimumSize(new Dimension(150,50));
-
-        JButton buscarButton = new JButton();
-        buscarButton.setText("Buscar");
+        JButton devolverButton = new JButton("Devolver");
 
         panelInput.add(inputText);
         panelInput.add(inputTitulo);
-        panelInput.add(buscarButton);
-
-
-        JPanel panelResultado = new JPanel(new FlowLayout());
+        panelInput.add(devolverButton);
 
         JPanel panelPrincipal = new JPanel(new GridLayout(2, 1));
         panelPrincipal.add(panelInput);
-        panelPrincipal.add(panelResultado);
 
         add(panelPrincipal);
 
+        devolverButton.addActionListener(e -> {
+            String titulo = inputTitulo.getText();
+            Libro libro = biblioteca.buscarLibro(titulo);
 
+            if (libro == null) {
+                JOptionPane.showMessageDialog(this, "El libro no fue encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+            } else if (!libro.isPrestado()) {
+                JOptionPane.showMessageDialog(this, "El libro ya está devuelto.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                biblioteca.devolverLibro(titulo);
+                JOptionPane.showMessageDialog(this, "Libro devuelto: " + titulo);
+            }
+        });
     }
 }
