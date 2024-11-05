@@ -55,7 +55,7 @@ public class Biblioteca {
         Libro libro = buscarLibro(titulo);
         if (libro != null && !libro.isPrestado()) {
             libro.setPrestado(true);
-            //guardarDatos();
+            guardarDatos();
         }
     }
 
@@ -63,7 +63,7 @@ public class Biblioteca {
         Libro libro = buscarLibro(titulo);
         if (libro != null && libro.isPrestado()) {
             libro.setPrestado(false);
-            //guardarDatos();
+            guardarDatos();
         }
     }
 
@@ -89,4 +89,14 @@ public class Biblioteca {
         }
     }
 
+    public void guardarDatos() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/libros.dat"))) {
+            for (Libro libro : libros) {
+                writer.write(libro.getTitulo() + "," + libro.getAutor() + "," + libro.getIsbn() + "," + libro.isPrestado());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Error al guardar el archivo: " + e.getMessage());
+        }
+    }
 }

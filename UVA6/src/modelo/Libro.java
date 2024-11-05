@@ -10,7 +10,7 @@ public class Libro {
         this.titulo = titulo;
         this.autor = autor;
         this.isbn = isbn;
-        this.prestado = false;
+        this.prestado = prestado;
     }
 
     public String getTitulo() {

@@ -40,11 +40,12 @@ public class BuscarGUI extends JFrame {
         panelInput.add(inputTitulo);
         panelInput.add(buscarButton);
 
-        // Panel de resultados
-        JPanel panelResultado = new JPanel(new BorderLayout());
-        modeloTabla = new DefaultTableModel(new String[]{"Título", "Autor", "ISBN", "Año"}, 0);
+        modeloTabla = new DefaultTableModel(new String[]{"Título", "Autor", "ISBN", "Año", "Prestado"}, 0);
         tablaResultados = new JTable(modeloTabla);
         JScrollPane scrollPane = new JScrollPane(tablaResultados);
+
+        // Panel de resultados
+        JPanel panelResultado = new JPanel(new BorderLayout());
         panelResultado.add(scrollPane, BorderLayout.CENTER);
 
 
@@ -90,7 +91,8 @@ public class BuscarGUI extends JFrame {
         // Añadir resultados a la tabla
         if (resultados != null) {
             for (Libro libro : resultados) {
-                this.modeloTabla.addRow(new Object[]{libro.getTitulo(), libro.getAutor(), libro.getIsbn(), 2002});
+                String prestadoText = libro.isPrestado() ? "Sí" : "No";
+                this.modeloTabla.addRow(new Object[]{libro.getTitulo(), libro.getAutor(), libro.getIsbn(), 2002, prestadoText});
             }
         }
     }

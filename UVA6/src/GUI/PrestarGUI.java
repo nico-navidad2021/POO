@@ -1,32 +1,35 @@
 package GUI;
 
+import modelo.Biblioteca;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class PrestarGUI extends JFrame {
-    public PrestarGUI() {
+    private Biblioteca biblioteca;
 
+    public PrestarGUI() {
+        this.biblioteca = new Biblioteca();
         setTitle("Prestar libros");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(500, 500);
 
 
-
         JPanel panelInput = new JPanel(new FlowLayout());
 
         JLabel inputText = new JLabel("Nombre: ");
 
-        JTextArea inputTitulo = new JTextArea();
-        inputTitulo.setSize(150,50);
-        inputTitulo.setMinimumSize(new Dimension(150,50));
+        JTextField inputTitulo = new JTextField("",20);
+        inputTitulo.setMinimumSize(new Dimension(150, 30));
+        inputTitulo.setSize(new Dimension(150, 30));
 
-        JButton buscarButton = new JButton();
-        buscarButton.setText("Buscar");
+        JButton prestarButton = new JButton();
+        prestarButton.setText("Prestar");
 
         panelInput.add(inputText);
         panelInput.add(inputTitulo);
-        panelInput.add(buscarButton);
+        panelInput.add(prestarButton);
 
 
         JPanel panelResultado = new JPanel(new FlowLayout());
@@ -37,6 +40,10 @@ public class PrestarGUI extends JFrame {
 
         add(panelPrincipal);
 
-
+        prestarButton.addActionListener(e -> {
+            String titulo = inputTitulo.getText();
+            biblioteca.prestarLibro(titulo);
+            JOptionPane.showMessageDialog(this, "Libro prestado: " + titulo);
+        });
     }
 }
