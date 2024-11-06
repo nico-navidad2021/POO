@@ -18,24 +18,19 @@ public class BuscarGUI extends JFrame {
 
     public BuscarGUI() {
         this.biblioteca = new Biblioteca();
-        setTitle("Busqueda libros");
+        setTitle("Búsqueda de libros");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(500, 500);
 
-
-        //Parte de los inputs
+        // Parte de los inputs
         JPanel panelInput = new JPanel(new FlowLayout());
 
         criterioBusqueda = new JComboBox<>(new String[]{"Título", "Autor", "Categoría"});
 
-        JButton buscarButton = new JButton();
-        buscarButton.setText("Buscar");
+        JButton buscarButton = new JButton("Buscar");
 
-        inputTitulo = new JTextField("",20);
-        inputTitulo.setMinimumSize(new Dimension(150, 30));
-        inputTitulo.setSize(new Dimension(150, 30));
-
+        inputTitulo = new JTextField(20);
         panelInput.add(criterioBusqueda);
         panelInput.add(inputTitulo);
         panelInput.add(buscarButton);
@@ -48,47 +43,48 @@ public class BuscarGUI extends JFrame {
         JPanel panelResultado = new JPanel(new BorderLayout());
         panelResultado.add(scrollPane, BorderLayout.CENTER);
 
-
-        //La pantalla general como un todo
+        // La pantalla general como un todo
         JPanel panelPrincipal = new JPanel(new BorderLayout());
         panelPrincipal.add(panelInput, BorderLayout.NORTH);
         panelPrincipal.add(panelResultado, BorderLayout.CENTER);
 
         add(panelPrincipal);
 
+        // Cargar todos los libros al abrir la ventana
+        cargarTodosLosLibros();
+
+        // Acción del botón Buscar para filtrar los resultados
         buscarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 buscarLibro();
             }
         });
+    }
 
+    private void cargarTodosLosLibros() {
+        // Limpiar la tabla antes de cargar los libros
+        modeloTabla.setRowCount(0);
+
+        // Cargar todos los libros almacenados en la biblioteca
+        List<Libro> libros = biblioteca.getLibrosAlmacenados();
+        for (Libro libro : libros) {
+            String prestadoText = libro.isPrestado() ? "Sí" : "No";
+            modeloTabla.addRow(new Object[]{libro.getTitulo(), libro.getAutor(), libro.getIsbn(), 2002, prestadoText});
+        }
     }
 
     private void buscarLibro() {
-
-        System.out.println("Buscando libros...");
-
         String inputBusqueda = inputTitulo.getText();
         String criterioBus = criterioBusqueda.getSelectedItem().toString();
 
-        System.out.println("inputBusqueda: "+inputBusqueda);
-        System.out.println("criterioBus: "+criterioBus);
+        // Filtrar libros según el criterio seleccionado y el texto de búsqueda
+        List<Libro> resultados = biblioteca.buscarLibro(criterioBus, inputBusqueda);
 
-        List<Libro> resultados = biblioteca.buscarLibro(criterioBus,inputBusqueda);
+        // Limpiar la tabla para mostrar solo los resultados filtrados
+        modeloTabla.setRowCount(0);
 
-        for (Libro libro : resultados) {
-            System.out.println("resultados: "+libro.getAutor());
-            System.out.println("resultados: "+libro.getTitulo());
-        }
-
-
-        // Limpiar la tabla
-        this.modeloTabla.setRowCount(0);
-        System.out.println("Limpie la tabla...");
-
-
-        // Añadir resultados a la tabla
+        // Añadir los resultados filtrados a la tabla
         if (resultados != null) {
             for (Libro libro : resultados) {
                 String prestadoText = libro.isPrestado() ? "Sí" : "No";
