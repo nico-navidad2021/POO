@@ -21,19 +21,20 @@ public class BuscarGUI extends JFrame {
         setTitle("Búsqueda de libros");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(500, 500);
+        setSize(600, 500);
 
         // Parte de los inputs
         JPanel panelInput = new JPanel(new FlowLayout());
 
         criterioBusqueda = new JComboBox<>(new String[]{"Título", "Autor", "Categoría"});
-
         JButton buscarButton = new JButton("Buscar");
+        JButton limpiarButton = new JButton("Limpiar Filtro");
 
         inputTitulo = new JTextField(20);
         panelInput.add(criterioBusqueda);
         panelInput.add(inputTitulo);
         panelInput.add(buscarButton);
+        panelInput.add(limpiarButton);
 
         modeloTabla = new DefaultTableModel(new String[]{"Título", "Autor", "ISBN", "Año", "Prestado"}, 0);
         tablaResultados = new JTable(modeloTabla);
@@ -58,6 +59,14 @@ public class BuscarGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 buscarLibro();
+            }
+        });
+
+        limpiarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cargarTodosLosLibros();
+                inputTitulo.setText("");
             }
         });
     }
@@ -88,7 +97,7 @@ public class BuscarGUI extends JFrame {
         if (resultados != null) {
             for (Libro libro : resultados) {
                 String prestadoText = libro.isPrestado() ? "Sí" : "No";
-                this.modeloTabla.addRow(new Object[]{libro.getTitulo(), libro.getAutor(), libro.getIsbn(), 2002, prestadoText});
+                modeloTabla.addRow(new Object[]{libro.getTitulo(), libro.getAutor(), libro.getIsbn(), 2002, prestadoText});
             }
         }
     }
